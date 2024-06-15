@@ -1,0 +1,1 @@
+from .buscador import obterDadosAcoesYfinance 
