@@ -21,3 +21,28 @@ Ideia inicial:
 
             - Para o .csv diário, não existe a informação da hora no campo Data.
 
+    - O que fazer:
+
+        - Buscar apenas a atualização dos dados após a criação dos arquivos em csv.
+
+            - Dica: Verificar a data e hora da última linha do arquivo csv com os novos dados que serão obtidos da consulta de atualização.
+
+        - Buscar os dados das empresas e salvar em um csv.
+
+            - Método para consulta já escrito, porém tem que alinhar os dados que serão salvos.
+
+        - Criar um módulo (pacote) reponsável por análise estatística.
+
+            - Analisar se esse módulo de estatística permanecerá nesse projeto ou migrará para o projeto de web service. De inicio deixar nesse projeto.
+
+            - Quais análises estatísticas/financeiras serão realizadas?
+
+                - Média, mediana, quartil, variância, desvio-padrão, covariância, correlação e outras (obter mais ideias).
+
+                - Comparação dos valores com tempo gráficos diferentes. Ex.: Comparar valor de fechamento atual com históricos anteriores.
+
+                - Fazer análise dos meses de pagamento de dividendos.
+
+                - Verificar criação dos gráficos a partir dos dados obtidos de cada ação.
+
+        - Obter os valores do IBOVESPA e salvar em csv (utilizar os mesmos tempos gráficos das ações).
