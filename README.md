@@ -46,3 +46,8 @@ Ideia inicial:
                 - Verificar criação dos gráficos a partir dos dados obtidos de cada ação.
 
         - Obter os valores do IBOVESPA e salvar em csv (utilizar os mesmos tempos gráficos das ações).
+
+        - Criar um esquema de log.
+        
+            - Log para informar a situação de atualização dos dados (arquivos csv).
+            - Log deve conter informação da data e hora (analisar possíveis outras informações).
