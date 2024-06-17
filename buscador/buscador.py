@@ -13,7 +13,6 @@ def obterEmpresasIBOV_csv():
     #print(data_frame_csv['Codigo yfinance'])
     return data_frame_csv
         
-
 def obterDadosAcoesYfinance():
     data_frame_acoes = obterEmpresasIBOV_csv()
 
@@ -25,9 +24,9 @@ def obterDadosAcoesYfinance():
     # codigo_acao.info['longName']
     
     dadosHistoricoCompletoIntervaloDiario(data_frame_acoes['Codigo yfinance'])
-    obterHistoricoIntervaloUmaHora(data_frame_acoes['Codigo yfinance'])
-    obterHistoricoIntervalo15Min(data_frame_acoes['Codigo yfinance'])
-    obterHistoricoIntervalo5Min(data_frame_acoes['Codigo yfinance'])
+    #obterHistoricoIntervaloUmaHora(data_frame_acoes['Codigo yfinance'])
+    #obterHistoricoIntervalo15Min(data_frame_acoes['Codigo yfinance'])
+    #obterHistoricoIntervalo5Min(data_frame_acoes['Codigo yfinance'])
 
 def modificaData(data):
     return data.strftime('%d/%m/%Y')
@@ -55,16 +54,16 @@ def dadosHistoricoCompletoIntervaloDiario(codigosYfinance):
 
     verifiaDiretorioBase()
 
-    for acao in codigosYfinance:
-    #acao = codigosYfinance[0]
-        verificaDiretorioAcao(acao)
-        criaArquivoCsvDiario(acao)
+    #for acao in codigosYfinance:
+    acao = codigosYfinance[0]
+    verificaDiretorioAcao(acao)
+    criaArquivoCsvDiario(acao)
 
 def criaArquivoCsvDiario(acao):
     diretorio_arquivo = 'dados_historicos/' + acao + '/' + acao + '_diario.csv'
     if os.path.isfile(diretorio_arquivo):
         #print(f'O arquivo "{diretorio_arquivo}" existe. Adicionar linhas novas, se existirem...')
-        pass
+        atualizaCsvDiario(acao)
     else:
         ticker_acao = yf.Ticker(acao)
         historico = ticker_acao.history(period='max')
@@ -79,6 +78,43 @@ def criaArquivoCsvDiario(acao):
         historico = historico.reset_index(drop=True)
 
         historico.to_csv(diretorio_arquivo, encoding='utf-8', index=False)
+
+def atualizaCsvDiario(acao):
+
+    hoje = datetime.now()
+    data_passada = hoje - relativedelta(days=14)
+    ticker_acao = yf.Ticker(acao)
+    historico = ticker_acao.history(start=data_passada, end=hoje, interval='1d')
+    historico.drop(columns=["Dividends", "Stock Splits"], inplace=True)
+    historico.rename(columns={'Open': 'Abertura',
+                            'High': 'Máxima',
+                            'Low':'Mínima',
+                            'Close':'Fechamento',}, inplace=True)
+    historico['Data'] = historico.index.to_series().apply(modificaData)
+    historico = historico.round({'Abertura': 2,'Máxima': 2,'Mínima': 2,'Fechamento': 2})
+    historico = historico[['Data','Abertura','Máxima','Mínima','Fechamento', 'Volume']]
+    historico = historico.reset_index(drop=True)
+
+    diretorio_arquivo = 'dados_historicos/' + acao + '/' + acao + '_diario.csv'
+    df_csv = pd.read_csv(diretorio_arquivo)
+
+    # Criar um dataframe a partir do arquivo csv correspondente ao tempo gráico
+    # comparara os dois dataframas para verificar os dados que estão faltando no
+    # no dataframe gerado pelo csv. Com isso, acrescentar as linhas faltantes.
+
+    print(acao)
+    print("--------------------------------")
+    print(historico)
+    print("--------------------------------")
+    print(df_csv)
+    print("--------------------------------")
+    
+    # Supondo que 'df' é o seu DataFrame, 'coluna' é a coluna que você quer verificar e 'valores' é o vetor de valores procurados
+    contem_valores = historico['Data'].isin(df_csv['Data'])
+    # Isso retornará uma Series de valores booleanos
+    print(contem_valores)
+
+
 
 def obterHistoricoIntervaloUmaHora(codigosYfinance):
     verifiaDiretorioBase()
