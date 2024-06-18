@@ -54,10 +54,10 @@ def dadosHistoricoCompletoIntervaloDiario(codigosYfinance):
 
     verifiaDiretorioBase()
 
-    #for acao in codigosYfinance:
-    acao = codigosYfinance[0]
-    verificaDiretorioAcao(acao)
-    criaArquivoCsvDiario(acao)
+    for acao in codigosYfinance:
+    #acao = codigosYfinance[0]
+        verificaDiretorioAcao(acao)
+        criaArquivoCsvDiario(acao)
 
 def criaArquivoCsvDiario(acao):
     diretorio_arquivo = 'dados_historicos/' + acao + '/' + acao + '_diario.csv'
@@ -82,7 +82,7 @@ def criaArquivoCsvDiario(acao):
 def atualizaCsvDiario(acao):
 
     hoje = datetime.now()
-    data_passada = hoje - relativedelta(days=14)
+    data_passada = hoje - relativedelta(days=21)
     ticker_acao = yf.Ticker(acao)
     historico = ticker_acao.history(start=data_passada, end=hoje, interval='1d')
     historico.drop(columns=["Dividends", "Stock Splits"], inplace=True)
@@ -98,22 +98,15 @@ def atualizaCsvDiario(acao):
     diretorio_arquivo = 'dados_historicos/' + acao + '/' + acao + '_diario.csv'
     df_csv = pd.read_csv(diretorio_arquivo)
 
-    # Criar um dataframe a partir do arquivo csv correspondente ao tempo gráico
-    # comparara os dois dataframas para verificar os dados que estão faltando no
-    # no dataframe gerado pelo csv. Com isso, acrescentar as linhas faltantes.
-
-    print(acao)
-    print("--------------------------------")
-    print(historico)
-    print("--------------------------------")
-    print(df_csv)
-    print("--------------------------------")
-    
-    # Supondo que 'df' é o seu DataFrame, 'coluna' é a coluna que você quer verificar e 'valores' é o vetor de valores procurados
     contem_valores = historico['Data'].isin(df_csv['Data'])
-    # Isso retornará uma Series de valores booleanos
-    print(contem_valores)
+    indices_falsos = contem_valores[contem_valores == False].index
+    linhas_novas = historico.loc[indices_falsos]
 
+    if not linhas_novas.empty:
+        linhas_novas.to_csv(diretorio_arquivo, mode='a', header=False, index=False)
+    else:
+        #print("dataframe a adicionar vazio.")
+        pass
 
 
 def obterHistoricoIntervaloUmaHora(codigosYfinance):
