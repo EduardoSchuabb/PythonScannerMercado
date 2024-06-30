@@ -20,12 +20,12 @@ Ideia inicial:
             - Exemplo de uma linha do arquivo .csv é: 15/06/2023 11:00,68.64,68.99,68.6,68.7,3674600
 
             - Para o .csv diário, não existe a informação da hora no campo Data.
-
-    - O que fazer:
-
+        
         - Buscar apenas a atualização dos dados após a criação dos arquivos em csv.
 
             - Dica: Verificar a data e hora da última linha do arquivo csv com os novos dados que serão obtidos da consulta de atualização.
+
+    - O que fazer:
 
         - Buscar os dados das empresas e salvar em um csv.
 
@@ -51,3 +51,5 @@ Ideia inicial:
         
             - Log para informar a situação de atualização dos dados (arquivos csv).
             - Log deve conter informação da data e hora (analisar possíveis outras informações).
+        
+        - Otimizar o Código (Não é prioridade nesse momento, mas deverá ser feito).

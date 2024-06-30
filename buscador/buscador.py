@@ -28,6 +28,19 @@ def obterDadosAcoesYfinance():
     obterHistoricoIntervalo15Min(data_frame_acoes['Codigo yfinance'])
     obterHistoricoIntervalo5Min(data_frame_acoes['Codigo yfinance'])
 
+    obterIndiceBovespa()
+
+def obterIndiceBovespa():
+
+    indice_bovespa_str = '^BVSP'
+
+    verifiaDiretorioBase()
+    verificaDiretorioIndice(indice_bovespa_str)
+    criaArquivoCsvDiario(indice_bovespa_str)
+    criaArquivoCsvUmaHora(indice_bovespa_str)
+    criaArquivoCsv15Min(indice_bovespa_str)
+    criaArquivoCsv5Min(indice_bovespa_str)
+
 def modificaData(data):
     return data.strftime('%d/%m/%Y')
 
@@ -42,8 +55,8 @@ def verifiaDiretorioBase():
         #print(f'O diretório "{diretorio_base}" já existe.')
         pass
 
-def verificaDiretorioAcao(acao):
-    diretorio_acao = 'dados_historicos/' + acao
+def verificaDiretorioIndice(indice):
+    diretorio_acao = 'dados_historicos/' + indice
     if not os.path.exists(diretorio_acao):
         os.makedirs(diretorio_acao)
     else:
@@ -56,7 +69,7 @@ def dadosHistoricoCompletoIntervaloDiario(codigosYfinance):
 
     for acao in codigosYfinance:
     #acao = codigosYfinance[0]
-        verificaDiretorioAcao(acao)
+        verificaDiretorioIndice(acao)
         criaArquivoCsvDiario(acao)
 
 def criaArquivoCsvDiario(acao):
@@ -113,7 +126,7 @@ def obterHistoricoIntervaloUmaHora(codigosYfinance):
 
     for acao in codigosYfinance:
     #acao = codigosYfinance[0]
-        verificaDiretorioAcao(acao)
+        verificaDiretorioIndice(acao)
         criaArquivoCsvUmaHora(acao)
 
 def criaArquivoCsvUmaHora(acao):
@@ -170,7 +183,7 @@ def obterHistoricoIntervalo15Min(codigosYfinance):
 
     for acao in codigosYfinance:
     #acao = codigosYfinance[0]
-        verificaDiretorioAcao(acao)
+        verificaDiretorioIndice(acao)
         criaArquivoCsv15Min(acao)
 
 def criaArquivoCsv15Min(acao):
@@ -229,7 +242,7 @@ def obterHistoricoIntervalo5Min(codigosYfinance):
 
     for acao in codigosYfinance:
     #acao = codigosYfinance[0]
-        verificaDiretorioAcao(acao)
+        verificaDiretorioIndice(acao)
         criaArquivoCsv5Min(acao)
 
 def criaArquivoCsv5Min(acao):
