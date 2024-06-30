@@ -5,6 +5,7 @@ from dateutil.relativedelta import relativedelta
 import pandas as pd
 import yfinance as yf
 import os
+from pacote_acoes import acao_classe
 
 
     
@@ -16,11 +17,6 @@ def obterEmpresasIBOV_csv():
 def obterDadosAcoesYfinance():
     data_frame_acoes = obterEmpresasIBOV_csv()
 
-    # Informações desejadas:
-    # codigo_acao.info['website']
-    # codigo_acao.info['sector']
-    # codigo_acao.info['longBusinessSummary']
-    # codigo_acao.info['longName']
     obterInformacoesAcao(data_frame_acoes['Codigo yfinance'])
 
     #dadosHistoricoCompletoIntervaloDiario(data_frame_acoes['Codigo yfinance'])
@@ -32,16 +28,30 @@ def obterDadosAcoesYfinance():
 
 def obterInformacoesAcao(codigosYfinance):
 
-    # Método em construção
-    # Obter informações diversas disponiveis no yahoo finance sobre uma empresa
-    # Criação de arquivo apenas para visualizar as informações que serão aproveitadas.
-    #for acao in codigosYfinance:
-    codigo_acao = codigosYfinance[0]
-    acao = yf.Ticker(codigo_acao)
-    print(acao.info)
-    with open("teste_acao_info.txt", "w") as arquivo:
-        arquivo.write(f"Dados da açao, \n {acao.info}")
+    acoes = []
 
+    for codigo_acao in codigosYfinance:
+        
+        yf_acao = yf.Ticker(codigo_acao)
+        codigo=yf_acao.info['symbol']
+        try:
+            website=yf_acao.info['website']
+        except:
+            website=''
+        setor=yf_acao.info['sector']
+        texto_empresa=yf_acao.info['longBusinessSummary']
+        try:
+            dividend_yield=yf_acao.info['dividendYield']
+        except:
+            dividend_yield=0
+        nome_curto=yf_acao.info['shortName']
+        preco_atual=yf_acao.info['currentPrice']
+
+        acao = acao_classe.Acao(codigo, website, setor, texto_empresa,
+                                dividend_yield, nome_curto, preco_atual)
+        acoes.append(acao)
+
+    print(len(acoes))
 
 def obterIndiceBovespa():
 
