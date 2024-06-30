@@ -16,19 +16,32 @@ def obterEmpresasIBOV_csv():
 def obterDadosAcoesYfinance():
     data_frame_acoes = obterEmpresasIBOV_csv()
 
-    #print(codigo_acao.info)
     # Informações desejadas:
     # codigo_acao.info['website']
     # codigo_acao.info['sector']
     # codigo_acao.info['longBusinessSummary']
     # codigo_acao.info['longName']
-    
-    dadosHistoricoCompletoIntervaloDiario(data_frame_acoes['Codigo yfinance'])
-    obterHistoricoIntervaloUmaHora(data_frame_acoes['Codigo yfinance'])
-    obterHistoricoIntervalo15Min(data_frame_acoes['Codigo yfinance'])
-    obterHistoricoIntervalo5Min(data_frame_acoes['Codigo yfinance'])
+    obterInformacoesAcao(data_frame_acoes['Codigo yfinance'])
+
+    #dadosHistoricoCompletoIntervaloDiario(data_frame_acoes['Codigo yfinance'])
+    #obterHistoricoIntervaloUmaHora(data_frame_acoes['Codigo yfinance'])
+    #obterHistoricoIntervalo15Min(data_frame_acoes['Codigo yfinance'])
+    #obterHistoricoIntervalo5Min(data_frame_acoes['Codigo yfinance'])
 
     obterIndiceBovespa()
+
+def obterInformacoesAcao(codigosYfinance):
+
+    # Método em construção
+    # Obter informações diversas disponiveis no yahoo finance sobre uma empresa
+    # Criação de arquivo apenas para visualizar as informações que serão aproveitadas.
+    #for acao in codigosYfinance:
+    codigo_acao = codigosYfinance[0]
+    acao = yf.Ticker(codigo_acao)
+    print(acao.info)
+    with open("teste_acao_info.txt", "w") as arquivo:
+        arquivo.write(f"Dados da açao, \n {acao.info}")
+
 
 def obterIndiceBovespa():
 
