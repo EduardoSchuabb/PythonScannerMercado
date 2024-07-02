@@ -11,19 +11,15 @@ from pacote_acoes import acao_classe
     
 def obterEmpresasIBOV_csv():
     data_frame_csv = pd.read_csv('IBOVDia.csv', delimiter=';')
-    #print(data_frame_csv['Codigo yfinance'])
+
     return data_frame_csv
         
-def obterDadosAcoesYfinance():
-    data_frame_acoes = obterEmpresasIBOV_csv()
+def obterDadosAcoesYfinance(codigosYfinance):
 
-    obterInformacoesAcao(data_frame_acoes['Codigo yfinance'])
-
-    #dadosHistoricoCompletoIntervaloDiario(data_frame_acoes['Codigo yfinance'])
-    #obterHistoricoIntervaloUmaHora(data_frame_acoes['Codigo yfinance'])
-    #obterHistoricoIntervalo15Min(data_frame_acoes['Codigo yfinance'])
-    #obterHistoricoIntervalo5Min(data_frame_acoes['Codigo yfinance'])
-
+    dadosHistoricoCompletoIntervaloDiario(codigosYfinance)
+    obterHistoricoIntervaloUmaHora(codigosYfinance)
+    obterHistoricoIntervalo15Min(codigosYfinance)
+    obterHistoricoIntervalo5Min(codigosYfinance)
     obterIndiceBovespa()
 
 def obterInformacoesAcao(codigosYfinance):
@@ -51,7 +47,7 @@ def obterInformacoesAcao(codigosYfinance):
                                 dividend_yield, nome_curto, preco_atual)
         acoes.append(acao)
 
-    print(len(acoes))
+    return acoes
 
 def obterIndiceBovespa():
 

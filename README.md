@@ -27,7 +27,7 @@ Ideia inicial:
 
     - O que fazer:
 
-        - Buscar os dados das empresas e salvar em um csv.
+        - Buscar os dados das empresas e salvar em um csv (?). Já está salvo em classes.
 
             - Método para consulta já escrito, porém tem que alinhar os dados que serão salvos.
 
@@ -41,7 +41,7 @@ Ideia inicial:
 
                 - Comparação dos valores com tempo gráficos diferentes. Ex.: Comparar valor de fechamento atual com históricos anteriores.
 
-                - Fazer análise dos meses de pagamento de dividendos.
+                - Fazer análise dos meses de pagamento de dividendos. - Baixa prioridade.
 
                 - Verificar criação dos gráficos a partir dos dados obtidos de cada ação.
 
