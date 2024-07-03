@@ -24,7 +24,7 @@ def obterDadosAcoesYfinance(codigosYfinance):
 
 def obterInformacoesAcao(codigosYfinance):
 
-    acoes = []
+    informacoes_acoes = []
 
     for codigo_acao in codigosYfinance:
         
@@ -45,9 +45,9 @@ def obterInformacoesAcao(codigosYfinance):
 
         acao = acao_classe.Acao(codigo, website, setor, texto_empresa,
                                 dividend_yield, nome_curto, preco_atual)
-        acoes.append(acao)
+        informacoes_acoes.append(acao)
 
-    return acoes
+    return informacoes_acoes
 
 def obterIndiceBovespa():
 
