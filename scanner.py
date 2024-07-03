@@ -15,9 +15,10 @@ def main():
     ### - Verificar estratégia. Não desejo esse retorno dessa funcao. - ###
     #informacoes_acoes = buscador.obterDadosAcoesYfinance(data_frame_acoes['Codigo yfinance'])
 
+    # obtem dados estatisticos por acao
+    #analisador.informacoesEstatisticaCSVFechamento(data_frame_acoes['Codigo yfinance'])
 
-    analisador.informacoesEstatisticaCSVFechamento(data_frame_acoes['Codigo yfinance'])
-
+    analisador.variacaoPorCandleFechamento()
 
 
 

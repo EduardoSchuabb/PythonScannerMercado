@@ -104,7 +104,27 @@ def correlacoesCSVcomIBOVESPA():
 #
 #
 def variacaoPorCandleFechamento():
-    pass
+    
+    codigo = 'PETR4.SA'
+
+    PATH_teste_diario = 'dados_historicos/' + codigo + '/' + codigo + '_diario.csv'
+    PATH_teste_1H = 'dados_historicos/' + codigo + '/' + codigo + '_UmaHora.csv'
+    PATH_teste_15min = 'dados_historicos/' + codigo + '/' + codigo + '_15min.csv'
+    PATH_teste_5min = 'dados_historicos/' + codigo + '/' + codigo + '_5min.csv'
+
+    df_acao = pd.read_csv(PATH_teste_diario)
+
+
+    # Fazer a comparação dos fechamentos (atual e anterior) para verificar se foi candle da alta ou de baixa.
+    # possivel fazer a contagem de candle seguidos de alta ou de baixa.
+    for index, linha in df_acao.iterrows():
+        if index > 1:
+            pos_ant = index - 1
+        else:
+            pos_ant = index
+        
+        resultado = round(linha['Fechamento'] - df_acao.loc[pos_ant]['Fechamento'], 2)
+        print(f"Índice: {index}, Data: {linha['Data']}, Fechamento: {linha['Fechamento']}, Resultado: {resultado}")
 
 
 #
