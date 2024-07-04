@@ -18,7 +18,7 @@ def main():
     # obtem dados estatisticos por acao
     #analisador.informacoesEstatisticaCSVFechamento(data_frame_acoes['Codigo yfinance'])
 
-    analisador.variacaoPorCandleFechamento()
+    analisador.variacaoPorCandleFechamento(data_frame_acoes['Codigo yfinance'])
 
 
 

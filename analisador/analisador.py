@@ -3,8 +3,7 @@
 # A ideia é: Fazer metodos para analise estatistica e futuramente uma IA.
 import pandas as pd
 
-#
-#
+
 # Método para obter valores como média, quartis e outros...
 # priorizar coluna de fechamento e obter relações entre os tempos gráficos.
 # fazer comparações com o valor atual da acao (ultimo fechamento?).
@@ -20,71 +19,30 @@ def informacoesEstatisticaCSVFechamento(codigos):
 
 def criaDataframeEstatistico(codigo):
 
-    df_estatistica_diario = pd.DataFrame()
-    df_estatistica_1H = pd.DataFrame()
-    df_estatistica_15min = pd.DataFrame()
-    df_estatistica_5min = pd.DataFrame()
+    PATH_csv = ['dados_historicos/' + codigo + '/' + codigo + '_diario.csv',
+                'dados_historicos/' + codigo + '/' + codigo + '_UmaHora.csv',
+                'dados_historicos/' + codigo + '/' + codigo + '_15min.csv',
+                'dados_historicos/' + codigo + '/' + codigo + '_5min.csv']
+    
+    tempo_grafico = ['Diario', 'Uma hora', '15 min', '5 min']
+    posicao = 0
 
-    PATH_teste_diario = 'dados_historicos/' + codigo + '/' + codigo + '_diario.csv'
-    PATH_teste_1H = 'dados_historicos/' + codigo + '/' + codigo + '_UmaHora.csv'
-    PATH_teste_15min = 'dados_historicos/' + codigo + '/' + codigo + '_15min.csv'
-    PATH_teste_5min = 'dados_historicos/' + codigo + '/' + codigo + '_5min.csv'
+    for path in PATH_csv:
 
-    df_acao = pd.read_csv(PATH_teste_diario)
+        df_estatistica = pd.DataFrame()
+        df_acao = pd.read_csv(path)
   
-    df_estatistica_diario.insert(0, '150 Periodos', df_acao['Fechamento'].tail(150).describe())
-    df_estatistica_diario.insert(1, '75 Periodos', df_acao['Fechamento'].tail(75).describe())
-    df_estatistica_diario.insert(2, '21 Periodos', df_acao['Fechamento'].tail(21).describe())
-    df_estatistica_diario.insert(3, '7 Periodos', df_acao['Fechamento'].tail(7).describe())
-    df_estatistica_diario = df_estatistica_diario.round(2)
-    print('-----------------------------------------------------')
-    print('Diario')
-    print('-----------------------------------------------------')
-
-    print(df_estatistica_diario)
-
-    df_acao = pd.read_csv(PATH_teste_1H)
-    
-    df_estatistica_1H.insert(0, '150 Periodos', df_acao['Fechamento'].tail(150).describe())
-    df_estatistica_1H.insert(1, '75 Periodos', df_acao['Fechamento'].tail(75).describe())
-    df_estatistica_1H.insert(2, '21 Periodos', df_acao['Fechamento'].tail(21).describe())
-    df_estatistica_1H.insert(3, '7 Periodos', df_acao['Fechamento'].tail(7).describe())
-    df_estatistica_1H = df_estatistica_1H.round(2)
-    print('-----------------------------------------------------')
-    print('1 Hora')
-    print('-----------------------------------------------------')
-    print(df_estatistica_1H)
-
-    df_acao = pd.read_csv(PATH_teste_15min)
-    
-    df_estatistica_15min.insert(0, '150 Periodos', df_acao['Fechamento'].tail(150).describe())
-    df_estatistica_15min.insert(1, '75 Periodos', df_acao['Fechamento'].tail(75).describe())
-    df_estatistica_15min.insert(2, '21 Periodos', df_acao['Fechamento'].tail(21).describe())
-    df_estatistica_15min.insert(3, '7 Periodos', df_acao['Fechamento'].tail(7).describe())
-    df_estatistica_15min = df_estatistica_15min.round(2)
-    print('-----------------------------------------------------')
-    print('15 min')
-    print('-----------------------------------------------------')
-    print(df_estatistica_15min)
-
-    df_acao = pd.read_csv(PATH_teste_5min)
-    
-    df_estatistica_5min.insert(0, '150 Periodos', df_acao['Fechamento'].tail(150).describe())
-    df_estatistica_5min.insert(1, '75 Periodos', df_acao['Fechamento'].tail(75).describe())
-    df_estatistica_5min.insert(2, '21 Periodos', df_acao['Fechamento'].tail(21).describe())
-    df_estatistica_5min.insert(3, '7 Periodos', df_acao['Fechamento'].tail(7).describe())
-    df_estatistica_5min = df_estatistica_5min.round(2)
-    print('-----------------------------------------------------')
-    print('5 min')
-    print('-----------------------------------------------------')
-    print(df_estatistica_5min)
-
-    # Salvar o dataframes - São 4 dataframes estatisticos por acao:
-    # df_estatistica_diario
-    # df_estatistica_1H
-    # df_estatistica_15min
-    # df_estatistica_5min
-    #
+        df_estatistica.insert(0, '150 Periodos', df_acao['Fechamento'].tail(150).describe())
+        df_estatistica.insert(1, '75 Periodos', df_acao['Fechamento'].tail(75).describe())
+        df_estatistica.insert(2, '21 Periodos', df_acao['Fechamento'].tail(21).describe())
+        df_estatistica.insert(3, '7 Periodos', df_acao['Fechamento'].tail(7).describe())
+        df_estatistica = df_estatistica.round(2)
+        print('--------------------------------------------------------------')
+        print(f'Tempo: {tempo_grafico[posicao]}')
+        print('--------------------------------------------------------------')
+        
+        print(df_estatistica)
+        posicao +=1
 
 
 
@@ -103,28 +61,70 @@ def correlacoesCSVcomIBOVESPA():
 # verificar quais foram os dias com maiores variações.
 #
 #
-def variacaoPorCandleFechamento():
+def variacaoPorCandleFechamento(codigos):
     
+    #for codigo in codigosYfinance:
     codigo = 'PETR4.SA'
-
-    PATH_teste_diario = 'dados_historicos/' + codigo + '/' + codigo + '_diario.csv'
-    PATH_teste_1H = 'dados_historicos/' + codigo + '/' + codigo + '_UmaHora.csv'
-    PATH_teste_15min = 'dados_historicos/' + codigo + '/' + codigo + '_15min.csv'
-    PATH_teste_5min = 'dados_historicos/' + codigo + '/' + codigo + '_5min.csv'
-
-    df_acao = pd.read_csv(PATH_teste_diario)
+    analiseResultadoPorCandle(codigo)
 
 
-    # Fazer a comparação dos fechamentos (atual e anterior) para verificar se foi candle da alta ou de baixa.
-    # possivel fazer a contagem de candle seguidos de alta ou de baixa.
-    for index, linha in df_acao.iterrows():
-        if index > 1:
-            pos_ant = index - 1
-        else:
-            pos_ant = index
+
+def analiseResultadoPorCandle(codigo):
+
+    PATH_csv = ['dados_historicos/' + codigo + '/' + codigo + '_diario.csv',
+                'dados_historicos/' + codigo + '/' + codigo + '_UmaHora.csv',
+                'dados_historicos/' + codigo + '/' + codigo + '_15min.csv',
+                'dados_historicos/' + codigo + '/' + codigo + '_5min.csv']
+    
+    tempo_grafico = ['Diario', 'Uma hora', '15 min', '5 min']
+    posicao = 0
+
+    for path in PATH_csv:
+
+        df_acao = pd.read_csv(path)
+
+        # Essa valor de 200 pode variar. Por enquanto deixar assim, mas analisar a quantidade de candle que serão utilizados.
+        df_acao = df_acao.tail(100)
+        df_acao = df_acao.reset_index()
+
+        cont_candle_tendencia = 1
+        resultado_anterior = 0
+        cont_candle_positivo = 0
+        cont_candle_negativo = 0
+        string_result = ""
+
+        print('--------------------------------------------------------------')
+        print(f'Tempo: {tempo_grafico[posicao]}')
+        print('--------------------------------------------------------------')
+
+        for index, linha in df_acao.iterrows():
+            if index > 0:
+                pos_ant = index - 1
+            else:
+                pos_ant = index
         
-        resultado = round(linha['Fechamento'] - df_acao.loc[pos_ant]['Fechamento'], 2)
-        print(f"Índice: {index}, Data: {linha['Data']}, Fechamento: {linha['Fechamento']}, Resultado: {resultado}")
+            resultado = round(linha['Fechamento'] - df_acao.loc[pos_ant]['Fechamento'], 2)
+            string_result = " ---"
+            if(resultado > 0):
+                cont_candle_positivo +=1
+                string_result = "POS"
+            if(resultado < 0):
+                cont_candle_negativo +=1
+                string_result = "NEG"
+
+            if(resultado*resultado_anterior <= 0):
+                cont_candle_tendencia = 1
+            else:
+                cont_candle_tendencia+=1
+
+            resultado_anterior = resultado
+            print(f"Índice: {index}, Data: {linha['Data']}, Fechamento: {linha['Fechamento']}, Resultado: {resultado}, Contagem: {cont_candle_tendencia} - {string_result}")
+
+        print("--------------------------------------------------------------------------------------------")
+        print(f"Candles positivos: {cont_candle_positivo}")
+        print(f"Candles negativos: {cont_candle_negativo}")
+
+        posicao += 1
 
 
 #
