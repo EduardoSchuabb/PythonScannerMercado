@@ -1,1 +1,1 @@
-from .analisador import informacoesEstatisticaCSVFechamento, variacaoPorCandleFechamento
+from .analisador import *
