@@ -1,14 +1,33 @@
 import requests
 
-def requestBrapiFii(codigo_fii, tempo='1mo', intervalo='1d'):
-    # Contra free apenas os seguintes valores:
-    # tempo: 1d, 5d, 1mo, 3mo
-    # intervalo: 1d
-    
 
+'''
+    Método requestBrapiFiiHistorico
+    Parámetros: Por motivos de conta free, apenas esses parâmetros são permitidos
+        - codigo_fii:
+        - tempo: 1d, 5d, 1mo, 3mo
+        - intervalo: 1d
+    Função: Realiza a obtenção do histórico de valores de uma FII na API https://brapi.dev/dashboard
+    Retorno: Um Json com o histório dos dados no padrão: Data, Abertura, Max, Min, Fechamento, Volume e fechamento de ajuste.
+'''
+def requestBrapiFiiHistorico(codigo_fii, tempo='3mo', intervalo='1d'):
     #salvar token de forma mais segura, apenas para teste.
-   token = '6KkGZ7xQ1YQ2wqw3xYJrd5'
-   url = f'https://brapi.dev/api/quote/{codigo_fii}?token={token}&range={tempo}&interval={intervalo}'
-   resposta = requests.get(url)
-   data = resposta.json()
-   print(data)
+    token = obterCodigoToken()
+    url = f'https://brapi.dev/api/quote/{codigo_fii}?token={token}&range={tempo}&interval={intervalo}'
+    resposta = requests.get(url)
+    if resposta.ok:
+        dados = resposta.json()
+        dados = dados['results'][0]['historicalDataPrice']
+    else:
+        dados = ''
+
+    return dados
+
+def obterCodigoToken():
+    with open ('buscador/code.txt', 'r', encoding='utf-8') as file:
+        token = file.read()
+    return token
+
+
+
+

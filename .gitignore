@@ -1,6 +1,7 @@
 # Pastas e arquivos gerados pelo código
-dados_historicos/
+arquivos/
 *.xlsx
+*.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
