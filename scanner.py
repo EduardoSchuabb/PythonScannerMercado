@@ -1,4 +1,3 @@
-import buscador.buscador_FIIs as buscador_FIIs
 import analisador
 
 def main():

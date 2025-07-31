@@ -1,9 +1,10 @@
 import requests
 
 
+
 '''
     Método requestBrapiFiiHistorico
-    Parámetros: Por motivos de conta free, apenas esses parâmetros são permitidos
+    Parâmetros: Por motivos de conta free, apenas esses parâmetros são permitidos
         - codigo_fii:
         - tempo: 1d, 5d, 1mo, 3mo
         - intervalo: 1d
@@ -23,6 +24,13 @@ def requestBrapiFiiHistorico(codigo_fii, tempo='3mo', intervalo='1d'):
 
     return dados
 
+'''
+    Método obterCodigoToken
+    Parâmetros: nenhum
+    Função: Realiza a leitura de um arquivo com do token para acessar a API da brapi.
+    Retorno: String que contém um token.
+
+'''
 def obterCodigoToken():
     with open ('buscador/code.txt', 'r', encoding='utf-8') as file:
         token = file.read()
